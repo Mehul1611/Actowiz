@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+storage/*
+!storage/.gitkeep
+.venv/
+venv/
+*.egg-info/
+System_Design_Requirements.md
+storage/
+data/
