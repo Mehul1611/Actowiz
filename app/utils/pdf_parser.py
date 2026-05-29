@@ -1,6 +1,7 @@
 import logging
 import fitz
 import numpy as np
+from rapidocr_onnxruntime import RapidOCR
 
 logger = logging.getLogger(__name__)
 _ocr_engine = None
@@ -9,7 +10,6 @@ _ocr_engine = None
 def get_ocr_engine():
     global _ocr_engine
     if _ocr_engine is None:
-        from rapidocr_onnxruntime import RapidOCR
         logger.info("loading rapidocr for scanned pdf pages")
         _ocr_engine = RapidOCR()
     return _ocr_engine

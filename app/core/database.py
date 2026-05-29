@@ -2,6 +2,9 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 from app.core.base import Base
+import app.models.document
+import app.models.chunk
+import app.models.query_log
 
 
 engine = create_engine(settings.database_url, pool_pre_ping=True)
@@ -17,10 +20,6 @@ def get_db_session():
 
 
 def init_database():
-    import app.models.document
-    import app.models.chunk
-    import app.models.query_log
-
     with engine.connect() as conn:
         conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
         conn.commit()

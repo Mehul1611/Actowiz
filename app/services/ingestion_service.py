@@ -8,6 +8,8 @@ from app.models.chunk import Chunk, Embedding
 from app.utils.file_loader import load_file_content
 from app.services.chunking_service import chunk_text
 from app.services.embedding_service import generate_embeddings_batch
+from app.services.retrieval_service import clear_query_cache
+
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +58,9 @@ def process_document_content(db: Session, document: Document):
     vectors = generate_embeddings_batch(texts)
     store_chunks_and_embeddings(db, document.id, chunk_items, vectors)
     mark_document_status(db, document.id, "COMPLETED")
+
+    clear_query_cache()
+
     logger.info("document %s completed with %s chunks", document.id, len(chunk_items))
 
 
