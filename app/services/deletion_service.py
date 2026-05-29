@@ -4,6 +4,7 @@ from pathlib import Path
 from sqlalchemy.orm import Session
 from app.models.document import Document
 from app.models.chunk import Chunk, Embedding
+from app.services.retrieval_service import clear_query_cache
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +17,8 @@ def soft_delete_document(db: Session, document_id):
     doc.status = "DELETED"
     doc.updated_at = datetime.now(timezone.utc)
     db.commit()
+    
+    clear_query_cache()
     return True
 
 
@@ -35,5 +38,8 @@ def hard_delete_document_data(db: Session, document_id):
 
     db.delete(doc)
     db.commit()
+
+    clear_query_cache()
+
     logger.info("hard deleted document %s", document_id)
     return True

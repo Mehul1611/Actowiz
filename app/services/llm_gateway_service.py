@@ -2,19 +2,9 @@ import logging
 import os
 from litellm import completion
 from app.core.config import settings
+from app.prompts.prompt import RAG_PROMPT
 
 logger = logging.getLogger(__name__)
-
-RAG_PROMPT = """You are an internal engineering assistant.
-
-Answer ONLY using provided context.
-
-Context:
-{context}
-
-Question:
-{query}
-"""
 
 
 def build_rag_prompt(query, context_chunks):
