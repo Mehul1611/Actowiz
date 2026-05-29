@@ -42,11 +42,13 @@ def process_document_content(db: Session, document: Document):
     logger.info("processing document %s", document.id)
     text = load_file_content(document.file_path, document.file_type)
     if not text:
+        logger.warning("document %s failed: no text extracted", document.id)
         mark_document_status(db, document.id, "FAILED")
         return
 
     chunk_items = chunk_text(text, document.file_type)
     if not chunk_items:
+        logger.warning("document %s failed: chunking produced nothing", document.id)
         mark_document_status(db, document.id, "FAILED")
         return
 
